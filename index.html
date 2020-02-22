@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Scrol To</title>
+    <title>Scroll To</title>
     <link href="style.css" rel="stylesheet" />
     <script src="scrollTo.js"></script>
   </head>
@@ -39,7 +39,7 @@
     </div>
     <div id="page-1" class="page">
       <h1>Page 1</h1>
-      <a href="#page-2" class="btn">Scroll to Page 2</a>
+      <a href="#page-3" class="btn">Scroll to Page 3</a>
     </div>
     <div id="page-2" class="page">
       <h1>Page 2</h1>
@@ -47,7 +47,7 @@
     </div>
     <div id="page-3" class="page">
       <h1>Page 3</h1>
-      <a href="#page-1" class="btn">Scroll to Page 1</a>
+      <a href="#page-2" class="btn">Scroll to Page 2</a>
     </div>
 
     <script>
@@ -86,7 +86,7 @@
           easeInOutQuint: t =>
             t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
         };
-        var DURATIONS = [200, 300, 400, 500, 600, 700, 800, 900, 1000];
+        var DURATIONS = [600, 900, 1200, 1500];
 
         var fieldDuration = document.querySelector("#duration");
         var fieldEasing = document.querySelector("#easing");
@@ -94,10 +94,13 @@
 
         var easingsHTML = "";
         for (var i = 0; i < Object.keys(EASINGS).length; i++) {
+          var selected = i === 2 ? " selected" : "";
           easingsHTML +=
             '<option value="' +
             Object.keys(EASINGS)[i] +
-            '">' +
+            '"' +
+            selected +
+            ">" +
             Object.keys(EASINGS)[i] +
             "</option>";
         }
@@ -105,10 +108,13 @@
 
         var durationsHTML = "";
         for (var i = 0; i < DURATIONS.length; i++) {
+          var selected = i === 2 ? " selected" : "";
           durationsHTML +=
             '<option value="' +
             DURATIONS[i] +
-            '">' +
+            '"' +
+            selected +
+            ">" +
             DURATIONS[i] +
             "</option>";
         }

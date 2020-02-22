@@ -1,57 +1,56 @@
 function smoothScrollTo(selector, duration, easing, callback) {
   "use strict";
-  var elem = document.querySelector(selector);
-  var frame = null;
-  var stopped = false;
-  var y1 = window.pageYOffset || 0;
-  var y2 = elem.offsetTop || 0;
-  var distance = Math.abs(y2 - y1);
-  var direction = y2 > y1 ? "down" : "up";
-  var t1 = performance.now();
-  var t2 = duration || 400;
-
-  var easingFn =
-    easing ||
-    function(t) {
-      return t;
-    };
+  var elem = document.querySelector(selector),
+    stopped = false,
+    y1 = window.pageYOffset || 0,
+    y2 = elem.offsetTop || 0,
+    distance = Math.abs(y2 - y1),
+    direction = y2 > y1 ? "down" : "up",
+    t1 = performance.now(),
+    t2 = duration || 400,
+    easingFn =
+      easing ||
+      function(t) {
+        return t;
+      };
 
   var startScroll = function() {
-    frame = requestAnimationFrame(tick);
-    window.addEventListener("mousewheel", stopSmoothScroll);
+    requestAnimationFrame(tick);
+    window.addEventListener("mousewheel", stopScroll);
   };
 
-  var stopSmoothScroll = function() {
-    cancelAnimationFrame(frame);
-    frame = null;
+  var stopScroll = function() {
     stopped = true;
   };
 
   var onScrollEnd = function() {
-    cancelAnimationFrame(frame);
-    frame = null;
-    window.removeEventListener("mousewheel", stopSmoothScroll);
+    window.removeEventListener("mousewheel", stopScroll);
     if (callback && typeof callback === "function") callback();
   };
 
+  var isInsideDocument = function(y) {
+    if (direction === "down")
+      return y < document.body.offsetHeight - window.innerHeight;
+    return y > 0;
+  };
+
   var tick = function() {
-    var elapsed = performance.now() - t1;
-    var progress = Math.min(elapsed / t2, 1);
-    var progreessDistance = easingFn(progress) * distance;
-    var y =
-      direction === "down" ? y1 + progreessDistance : y1 - progreessDistance;
+    var elapsed = performance.now() - t1,
+      progress = Math.min(elapsed / t2, 1),
+      temp = easingFn(progress) * distance,
+      y = direction === "down" ? y1 + temp : y1 - temp;
 
-    window.scrollTo(0, y);
+    if (stopped) {
+      stopped = false;
+      return;
+    }
 
-    if (
-      (progress < 1 &&
-        direction === "down" &&
-        y + window.innerHeight < document.body.offsetHeight) ||
-      (progress < 1 && direction === "up" && y > 0)
-    ) {
+    if (progress < 1 && isInsideDocument(y)) {
+      window.scrollTo(0, y);
       requestAnimationFrame(tick);
     } else {
-      onScrollEnd();
+      window.scrollTo(0, y2);
+      requestAnimationFrame(onScrollEnd);
     }
   };
 
@@ -64,11 +63,6 @@ function smoothScrollTo(selector, duration, easing, callback) {
 
   if (typeof easingFn !== "function") {
     console.warn("SmoothScrollTo: check easing function.");
-    return;
-  }
-
-  if (stopped) {
-    stopped = false;
     return;
   }
 

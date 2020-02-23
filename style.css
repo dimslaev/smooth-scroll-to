@@ -1,9 +1,50 @@
+.blue-1 {
+  color: #4c76f3;
+}
+.blue-2 {
+  color: #6f81b6;
+}
+.blue-3 {
+  color: #3451a7;
+}
+.blue-4 {
+  color: #95adf3;
+}
+.blue-5 {
+  color: #243874;
+}
+.bg-blue-1 {
+  background-color: #4c76f3;
+}
+.bg-blue-2 {
+  background-color: #6f81b6;
+}
+.bg-blue-3 {
+  background-color: #3451a7;
+}
+.bg-blue-4 {
+  background-color: #95adf3;
+}
+.bg-blue-5 {
+  background-color: #243874;
+}
+.bg-orange {
+  background-color: #f48164;
+}
+
 body {
   padding: 0;
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Muli", sans-serif;
   font-size: 16px;
   line-height: 1.25;
+  background: rgb(2, 24, 89);
+  background: linear-gradient(
+    0deg,
+    rgba(2, 24, 89, 1) 0%,
+    rgba(4, 51, 191, 1) 50%,
+    rgba(11, 158, 217, 1) 100%
+  );
 }
 
 section {
@@ -13,23 +54,20 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
 }
 
-section h1 {
+.section-title {
   position: absolute;
-  top: 40px;
-  left: 100px;
-}
-
-#section-1 {
-  background: lightslategray;
-}
-#section-2 {
-  background: lightsteelblue;
-}
-#section-3 {
-  background: lightgreen;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 48px;
+  font-size: 42px;
+  font-weight: 200;
+  letter-spacing: 0.9px;
+  text-align: center;
+  color: white;
 }
 
 .btn {
@@ -37,13 +75,19 @@ section h1 {
   user-select: none;
   box-sizing: border-box;
   font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 0.6px;
   line-height: 1;
-  padding: 9px 18px;
+  padding: 18px 24px 18px 36px;
   border-radius: 4px;
-  background: darkblue;
+  background: #0433bf;
   color: white;
   text-decoration: none;
-  margin: 0 4px;
+  margin: 0 10px;
+}
+
+.btn:hover {
+  background: #021859;
 }
 
 .btn span[data-svg] {
@@ -55,7 +99,7 @@ section h1 {
 }
 
 .btn span[data-svg] path {
-  fill: white;
+  fill: #f25ca2;
 }
 
 .options {
@@ -64,8 +108,9 @@ section h1 {
   top: 40px;
   right: 40px;
   width: 240px;
-  padding: 16px;
-  background: #666;
+  padding: 24px;
+  border-radius: 4px;
+  background: #021859;
   color: white;
 }
 
@@ -102,4 +147,8 @@ section h1 {
 .form-radio label {
   font-size: 12px;
   text-transform: uppercase;
+}
+
+.mb-0 {
+  margin-bottom: 0;
 }

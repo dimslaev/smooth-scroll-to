@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Smooth Scroll To</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Muli:200,400"
+      rel="stylesheet"
+    />
     <link href="style.css" rel="stylesheet" />
     <script src="smoothScrollTo.js"></script>
     <script src="index.js"></script>
@@ -18,7 +22,7 @@
         <label class="form-label">Easing </label>
         <select class="form-field" id="easing"></select>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-0">
         <label class="form-label">Callback</label>
 
         <div class="form-radio">
@@ -39,7 +43,7 @@
       </div>
     </div>
     <section id="section-1">
-      <h1><span class="btn-text">Section 1</span></h1>
+      <h1 class="section-title">Section 1</h1>
       <div class="buttons">
         <a class="btn" onclick="scrollToPage('#section-2')"
           ><span class="btn-text">Section 2</span> <span data-svg="down"></span
@@ -50,7 +54,7 @@
       </div>
     </section>
     <section id="section-2">
-      <h1><span class="btn-text">Section 2</span></h1>
+      <h1 class="section-title">Section 2</h1>
       <div class="buttons">
         <a class="btn" onclick="scrollToPage('#section-3')"
           ><span class="btn-text">Section 3</span> <span data-svg="down"></span
@@ -61,7 +65,7 @@
       </div>
     </section>
     <section id="section-3">
-      <h1><span class="btn-text">Section 3</span></h1>
+      <h1 class="section-title">Section 3</h1>
       <div class="buttons">
         <a class="btn" onclick="scrollToPage('#section-1')"
           ><span class="btn-text">Section 1</span> <span data-svg="up"></span

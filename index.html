@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Scroll To</title>
+    <title>Smooth Scroll To</title>
     <link href="style.css" rel="stylesheet" />
-    <script src="scrollTo.js"></script>
+    <script src="smoothScrollTo.js"></script>
+    <script src="index.js"></script>
   </head>
   <body>
     <div id="options" class="options">
@@ -37,115 +38,38 @@
         </div>
       </div>
     </div>
-    <div id="page-1" class="page">
-      <h1>Page 1</h1>
-      <a href="#page-3" class="btn">Scroll to Page 3</a>
-    </div>
-    <div id="page-2" class="page">
-      <h1>Page 2</h1>
-      <a href="#page-3" class="btn">Scroll to Page 3</a>
-    </div>
-    <div id="page-3" class="page">
-      <h1>Page 3</h1>
-      <a href="#page-2" class="btn">Scroll to Page 2</a>
-    </div>
-
-    <script>
-      window.onload = function() {
-        "use strict";
-        var EASINGS = {
-          // no easing, no acceleration
-          linear: t => t,
-          easeIn: t => Math.pow(t, 5),
-          easeOut: t => Math.pow(--t, 5) + 1,
-          // accelerating from zero velocity
-          easeInQuad: t => t * t,
-          // decelerating to zero velocity
-          easeOutQuad: t => t * (2 - t),
-          // acceleration until halfway, then deceleration
-          easeInOutQuad: t => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
-          // accelerating from zero velocity
-          easeInCubic: t => t * t * t,
-          // decelerating to zero velocity
-          easeOutCubic: t => --t * t * t + 1,
-          // acceleration until halfway, then deceleration
-          easeInOutCubic: t =>
-            t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
-          // accelerating from zero velocity
-          easeInQuart: t => t * t * t * t,
-          // decelerating to zero velocity
-          easeOutQuart: t => 1 - --t * t * t * t,
-          // acceleration until halfway, then deceleration
-          easeInOutQuart: t =>
-            t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t,
-          // accelerating from zero velocity
-          easeInQuint: t => t * t * t * t * t,
-          // decelerating to zero velocity
-          easeOutQuint: t => 1 + --t * t * t * t * t,
-          // acceleration until halfway, then deceleration
-          easeInOutQuint: t =>
-            t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
-        };
-        var DURATIONS = [600, 900, 1200, 1500];
-
-        var fieldDuration = document.querySelector("#duration");
-        var fieldEasing = document.querySelector("#easing");
-        var radioCallbackOn = document.querySelector("#callback-on");
-
-        var easingsHTML = "";
-        for (var i = 0; i < Object.keys(EASINGS).length; i++) {
-          var selected = i === 2 ? " selected" : "";
-          easingsHTML +=
-            '<option value="' +
-            Object.keys(EASINGS)[i] +
-            '"' +
-            selected +
-            ">" +
-            Object.keys(EASINGS)[i] +
-            "</option>";
-        }
-        fieldEasing.innerHTML = easingsHTML;
-
-        var durationsHTML = "";
-        for (var i = 0; i < DURATIONS.length; i++) {
-          var selected = i === 2 ? " selected" : "";
-          durationsHTML +=
-            '<option value="' +
-            DURATIONS[i] +
-            '"' +
-            selected +
-            ">" +
-            DURATIONS[i] +
-            "</option>";
-        }
-        fieldDuration.innerHTML = durationsHTML;
-
-        document.addEventListener(
-          "click",
-          function(e) {
-            var target = e.target.getAttribute("href");
-            if (!target) return;
-
-            var options = {
-              duration: fieldDuration.value,
-              easing: EASINGS[fieldEasing.value],
-              callback: radioCallbackOn.checked
-                ? function() {
-                    alert("Scroll End");
-                  }
-                : null,
-            };
-
-            smoothScrollTo(
-              target,
-              options.duration,
-              options.easing,
-              options.callback,
-            );
-          },
-          false,
-        );
-      };
-    </script>
+    <section id="section-1">
+      <h1><span class="btn-text">Section 1</span></h1>
+      <div class="buttons">
+        <a class="btn" onclick="scrollToPage('#section-2')"
+          ><span class="btn-text">Section 2</span> <span data-svg="down"></span
+        ></a>
+        <a class="btn" onclick="scrollToPage('#section-3')"
+          ><span class="btn-text">Section 3</span> <span data-svg="down"></span
+        ></a>
+      </div>
+    </section>
+    <section id="section-2">
+      <h1><span class="btn-text">Section 2</span></h1>
+      <div class="buttons">
+        <a class="btn" onclick="scrollToPage('#section-3')"
+          ><span class="btn-text">Section 3</span> <span data-svg="down"></span
+        ></a>
+        <a class="btn" onclick="scrollToPage('#section-1')"
+          ><span class="btn-text">Section 1</span> <span data-svg="up"></span
+        ></a>
+      </div>
+    </section>
+    <section id="section-3">
+      <h1><span class="btn-text">Section 3</span></h1>
+      <div class="buttons">
+        <a class="btn" onclick="scrollToPage('#section-1')"
+          ><span class="btn-text">Section 1</span> <span data-svg="up"></span
+        ></a>
+        <a class="btn" onclick="scrollToPage('#section-2')"
+          ><span class="btn-text">Section 2</span> <span data-svg="up"></span
+        ></a>
+      </div>
+    </section>
   </body>
 </html>

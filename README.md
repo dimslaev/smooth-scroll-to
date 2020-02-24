@@ -1,7 +1,5 @@
 ### Smooth Scroll
 
-Custom smooth scrolling in pure JS. Play with different options to adjust the feel:
+Custom smooth scrolling in pure JS. Play with different options to adjust the feel.
 
-- Duration
-- Easing
-- Speed
+https://dimslaev.github.io/smooth-scroll-visualizer

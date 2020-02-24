@@ -1,37 +1,3 @@
-.blue-1 {
-  color: #4c76f3;
-}
-.blue-2 {
-  color: #6f81b6;
-}
-.blue-3 {
-  color: #3451a7;
-}
-.blue-4 {
-  color: #95adf3;
-}
-.blue-5 {
-  color: #243874;
-}
-.bg-blue-1 {
-  background-color: #4c76f3;
-}
-.bg-blue-2 {
-  background-color: #6f81b6;
-}
-.bg-blue-3 {
-  background-color: #3451a7;
-}
-.bg-blue-4 {
-  background-color: #95adf3;
-}
-.bg-blue-5 {
-  background-color: #243874;
-}
-.bg-orange {
-  background-color: #f48164;
-}
-
 body {
   padding: 0;
   margin: 0;
@@ -45,6 +11,10 @@ body {
     rgba(4, 51, 191, 1) 50%,
     rgba(11, 158, 217, 1) 100%
   );
+}
+
+* {
+  box-sizing: border-box;
 }
 
 section {
@@ -73,7 +43,6 @@ section {
 .btn {
   cursor: pointer;
   user-select: none;
-  box-sizing: border-box;
   font-size: 18px;
   font-weight: 200;
   letter-spacing: 0.6px;
@@ -95,11 +64,16 @@ section {
   width: 16px;
   margin-left: 8px;
   position: relative;
-  top: 2px;
+  top: 1px;
 }
 
 .btn span[data-svg] path {
   fill: #f25ca2;
+}
+
+.btn-text {
+  position: relative;
+  top: -1px;
 }
 
 .options {
@@ -125,7 +99,6 @@ section {
 }
 
 .form-field {
-  box-sizing: border-box;
   width: 100%;
   padding: 4px 8px;
   border-radius: 4px;
@@ -151,4 +124,41 @@ section {
 
 .mb-0 {
   margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .btn {
+    font-size: 16px;
+    letter-spacing: 0.4px;
+    padding: 12px 16px 12px 24px;
+    border-radius: 4px;
+    background: #0433bf;
+    color: white;
+    text-decoration: none;
+    margin: 0 6px;
+  }
+
+  .options {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+
+    border-radius: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .form-group {
+    width: 50%;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }

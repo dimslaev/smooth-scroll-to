@@ -2,7 +2,6 @@ window.onload = function() {
   "use strict";
   var fieldDuration = document.querySelector("#duration");
   var fieldEasing = document.querySelector("#easing");
-  var radioCallbackOn = document.querySelector("#callback-on");
   var SVGs = document.querySelectorAll("[data-svg]");
   var durationsHTML = "";
   var easingsHTML = "";
@@ -87,12 +86,6 @@ window.onload = function() {
     var options = {
       duration: fieldDuration.value,
       easing: EASINGS[fieldEasing.value],
-      callback: radioCallbackOn.checked
-        ? function() {
-            alert("Scroll End");
-            isScrolling = false;
-          }
-        : null,
     };
 
     smoothScrollTo(target, options.duration, options.easing, options.callback);

@@ -14,65 +14,63 @@
   </head>
   <body>
     <div id="options" class="options">
-      <div class="form-group">
-        <label class="form-label">Duration (ms)</label>
-        <select class="form-field" id="duration"></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Easing </label>
-        <select class="form-field" id="easing"></select>
-      </div>
-      <div class="form-group mb-0">
-        <label class="form-label">Callback</label>
-
-        <div class="form-radio">
-          <input id="callback-on" name="callback" type="radio" value="on" />
-          <label for="callback-on">On</label>
-        </div>
-
-        <div class="form-radio">
-          <input
-            id="callback-off"
-            name="callback"
-            type="radio"
-            value="off"
-            checked
-          />
-          <label for="callback-off">Off</label>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="form-label">Duration (ms)</label>
+              <select class="form-field" id="duration"></select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="form-label">Easing </label>
+              <select class="form-field" id="easing"></select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <section id="section-1">
-      <h1 class="section-title">Section 1</h1>
-      <div class="buttons">
-        <a class="btn" onclick="scrollToPage('#section-2')"
-          ><span class="btn-text">Section 2</span> <span data-svg="down"></span
-        ></a>
-        <a class="btn" onclick="scrollToPage('#section-3')"
-          ><span class="btn-text">Section 3</span> <span data-svg="down"></span
-        ></a>
+      <div class="container">
+        <h1 class="section-title">Smooth Scroll To</h1>
+        <div class="buttons">
+          <a class="btn" onclick="scrollToPage('#section-2')"
+            ><span class="btn-text">Section 2</span>
+            <span data-svg="down"></span
+          ></a>
+          <a class="btn" onclick="scrollToPage('#section-3')"
+            ><span class="btn-text">Section 3</span>
+            <span data-svg="down"></span
+          ></a>
+        </div>
       </div>
     </section>
     <section id="section-2">
-      <h1 class="section-title">Section 2</h1>
-      <div class="buttons">
-        <a class="btn" onclick="scrollToPage('#section-3')"
-          ><span class="btn-text">Section 3</span> <span data-svg="down"></span
-        ></a>
-        <a class="btn" onclick="scrollToPage('#section-1')"
-          ><span class="btn-text">Section 1</span> <span data-svg="up"></span
-        ></a>
+      <div class="container">
+        <h1 class="section-title">Section 2</h1>
+        <div class="buttons">
+          <a class="btn" onclick="scrollToPage('#section-1')"
+            ><span class="btn-text">Section 1</span> <span data-svg="up"></span
+          ></a>
+          <a class="btn" onclick="scrollToPage('#section-3')"
+            ><span class="btn-text">Section 3</span>
+            <span data-svg="down"></span
+          ></a>
+        </div>
       </div>
     </section>
     <section id="section-3">
-      <h1 class="section-title">Section 3</h1>
-      <div class="buttons">
-        <a class="btn" onclick="scrollToPage('#section-1')"
-          ><span class="btn-text">Section 1</span> <span data-svg="up"></span
-        ></a>
-        <a class="btn" onclick="scrollToPage('#section-2')"
-          ><span class="btn-text">Section 2</span> <span data-svg="up"></span
-        ></a>
+      <div class="container">
+        <h1 class="section-title">Section 3</h1>
+        <div class="buttons">
+          <a class="btn" onclick="scrollToPage('#section-1')"
+            ><span class="btn-text">Section 1</span> <span data-svg="up"></span
+          ></a>
+          <a class="btn" onclick="scrollToPage('#section-2')"
+            ><span class="btn-text">Section 2</span> <span data-svg="up"></span
+          ></a>
+        </div>
       </div>
     </section>
   </body>

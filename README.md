@@ -4,11 +4,9 @@ Custom smooth scrolling in pure JS (no jQuery).
 
 ### Usage
 
-**1. Choose duration and easing**
-Use the [visualizer](https://dimslaev.github.io/smooth-scroll-to/demo) to find the right scroll duration and easing for your needs.
+**1. Choose duration and easing using the [visualizer](https://dimslaev.github.io/smooth-scroll-to/demo)**
 
-**2. Include smoothScrollTo**
-In your html:
+**2. Include smoothScrollTo.min.js**
 
 ```html
 <script src="smoothScrollTo.min.js"></script>

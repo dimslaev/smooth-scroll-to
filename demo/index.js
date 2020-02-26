@@ -3,27 +3,43 @@ window.onload = function() {
   var fieldDuration = document.querySelector("#duration");
   var fieldEasing = document.querySelector("#easing");
   var SVGs = document.querySelectorAll("[data-svg]");
-  var durationsHTML = "";
-  var easingsHTML = "";
-  var isScrolling = false;
+  var durationsSelectHTML = "";
+  var easingsSelectHTML = "";
   var DURATIONS = [600, 900, 1200, 1500, 2000];
+  var EASINGS = [
+    "linear",
+    "easeIn",
+    "easeOut",
+    "easeInQuad",
+    "easeOutQuad",
+    "easeInOutQuad",
+    "easeInCubic",
+    "easeOutCubic",
+    "easeInOutCubic",
+    "easeInQuart",
+    "easeOutQuart",
+    "easeInOutQuart",
+    "easeInQuint",
+    "easeOutQuint",
+    "easeInOutQuint",
+  ];
 
-  for (var i = 0; i < Object.keys(EASINGS).length; i++) {
+  for (var i = 0; i < EASINGS.length; i++) {
     var selected = i === 2 ? " selected" : "";
-    easingsHTML +=
+    easingsSelectHTML +=
       '<option value="' +
-      Object.keys(EASINGS)[i] +
+      EASINGS[i] +
       '"' +
       selected +
       ">" +
-      Object.keys(EASINGS)[i] +
+      EASINGS[i] +
       "</option>";
   }
-  fieldEasing.innerHTML = easingsHTML;
+  fieldEasing.innerHTML = easingsSelectHTML;
 
   for (var i = 0; i < DURATIONS.length; i++) {
     var selected = i === 2 ? " selected" : "";
-    durationsHTML +=
+    durationsSelectHTML +=
       '<option value="' +
       DURATIONS[i] +
       '"' +
@@ -32,7 +48,7 @@ window.onload = function() {
       DURATIONS[i] +
       "</option>";
   }
-  fieldDuration.innerHTML = durationsHTML;
+  fieldDuration.innerHTML = durationsSelectHTML;
 
   for (var i = 0; i < SVGs.length; i++) {
     var type = SVGs[i].dataset.svg;
@@ -52,15 +68,13 @@ window.onload = function() {
   function scrollToPage(selector) {
     var options = {
       duration: fieldDuration.value,
-      easing: EASINGS[fieldEasing.value],
+      easing: fieldEasing.value,
+      callback: function() {
+        console.log("scroll end");
+      },
     };
 
-    smoothScrollTo(
-      selector,
-      options.duration,
-      options.easing,
-      options.callback,
-    );
+    smoothScrollTo(selector, options);
 
     return false;
   }

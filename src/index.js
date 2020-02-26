@@ -1,18 +1,16 @@
 function smoothScrollTo(selector, options) {
   "use strict";
+
   var elem = document.querySelector(selector),
     stopped = false,
-    y1 = window.pageYOffset || 0,
-    y2 = elem.offsetTop || 0,
+    y1 = window.pageYOffset,
+    y2 = elem.offsetTop,
     distance = Math.abs(y2 - y1),
     direction = y2 > y1 ? "down" : "up",
     t1 = performance.now(),
     t2 = options.duration || 400,
-    easingFn =
-      options.easing ||
-      function(t) {
-        return t;
-      };
+    easings = require("./easings.js"),
+    easingFn = easings[options.easing];
 
   var startScroll = function() {
     requestAnimationFrame(tick);
@@ -57,13 +55,13 @@ function smoothScrollTo(selector, options) {
 
   if (!elem) {
     console.warn(
-      "SmoothScrollTo: DOM element " + selector + " does not exist.",
+      "[SmoothScrollTo]: DOM element " + selector + " does not exist.",
     );
     return;
   }
 
-  if (typeof easingFn !== "function") {
-    console.warn("SmoothScrollTo: check easing function.");
+  if (!easings.hasOwnProperty(options.easing)) {
+    console.warn("[SmoothScrollTo] unknown easing function.");
     return;
   }
 
@@ -73,3 +71,5 @@ function smoothScrollTo(selector, options) {
 
   startScroll();
 }
+
+window.smoothScrollTo = smoothScrollTo;

@@ -5,22 +5,19 @@ Custom smooth scrolling in pure JS (no jQuery).
 ### Usage
 
 **1. Choose duration and easing**
-Use the [visualizer](https://dimslaev.github.io/smooth-scroll-visualizer) to find the right scroll duration and easing for your needs.
+Use the [visualizer](https://dimslaev.github.io/smooth-scroll-to/demo) to find the right scroll duration and easing for your needs.
 
-**2. Copy the easing function**
-Check out `easings.js`.
-
-**3. Include the script**
+**2. Include smoothScrollTo**
 In your html:
 
 ```html
 <script src="smoothScrollTo.min.js"></script>
 ```
 
-**4. Attach the click handler**
+**3. Code Example**
 
 ```html
-<a href="#target-section" onclick="scrollToPage('#target-section')"
+<a href="#target-section" onclick="scrollToSection('#target-section')"
   >Scroll to target section</a
 >
 
@@ -31,15 +28,13 @@ In your html:
 <script>
   var options = {
     duration: 600,
-    easing: function(t) {
-      return Math.pow(t, 5);
-    },
+    easing: "easeInOutQuad",
     callback: function() {
       console.log("scroll end");
     },
   };
 
-  var scrollToPage = function(selector) {
+  var scrollToSection = function(selector) {
     smoothScrollTo(selector, options);
     return false;
   };

@@ -7,39 +7,6 @@ window.onload = function() {
   var easingsHTML = "";
   var isScrolling = false;
   var DURATIONS = [600, 900, 1200, 1500, 2000];
-  var EASINGS = {
-    // no easing, no acceleration
-    linear: t => t,
-    easeIn: t => Math.pow(t, 5),
-    easeOut: t => Math.pow(--t, 5) + 1,
-    // accelerating from zero velocity
-    easeInQuad: t => t * t,
-    // decelerating to zero velocity
-    easeOutQuad: t => t * (2 - t),
-    // acceleration until halfway, then deceleration
-    easeInOutQuad: t => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
-    // accelerating from zero velocity
-    easeInCubic: t => t * t * t,
-    // decelerating to zero velocity
-    easeOutCubic: t => --t * t * t + 1,
-    // acceleration until halfway, then deceleration
-    easeInOutCubic: t =>
-      t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
-    // accelerating from zero velocity
-    easeInQuart: t => t * t * t * t,
-    // decelerating to zero velocity
-    easeOutQuart: t => 1 - --t * t * t * t,
-    // acceleration until halfway, then deceleration
-    easeInOutQuart: t =>
-      t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t,
-    // accelerating from zero velocity
-    easeInQuint: t => t * t * t * t * t,
-    // decelerating to zero velocity
-    easeOutQuint: t => 1 + --t * t * t * t * t,
-    // acceleration until halfway, then deceleration
-    easeInOutQuint: t =>
-      t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
-  };
 
   for (var i = 0; i < Object.keys(EASINGS).length; i++) {
     var selected = i === 2 ? " selected" : "";
@@ -82,13 +49,18 @@ window.onload = function() {
     SVGs[i].innerHTML = svg;
   }
 
-  function scrollToPage(target) {
+  function scrollToPage(selector) {
     var options = {
       duration: fieldDuration.value,
       easing: EASINGS[fieldEasing.value],
     };
 
-    smoothScrollTo(target, options.duration, options.easing, options.callback);
+    smoothScrollTo(
+      selector,
+      options.duration,
+      options.easing,
+      options.callback,
+    );
 
     return false;
   }

@@ -1,0 +1,30 @@
+{
+  "name": "smooth-scroll-to",
+  "version": "1.0.0",
+  "description": "smooth scroll to section without jquery",
+  "main": "index.js",
+  "scripts": {
+    "minify": "webpack --mode=production ./smoothScrollTo.js -o ./smoothScrollTo.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimslaev/smooth-scroll-visualizer.git"
+  },
+  "keywords": [
+    "smooth",
+    "scroll",
+    "vanilla",
+    "smooth",
+    "scrolling"
+  ],
+  "dependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "author": "dimslaev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dimslaev/smooth-scroll-visualizer/issues"
+  },
+  "homepage": "https://github.com/dimslaev/smooth-scroll-visualizer#readme"
+}

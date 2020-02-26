@@ -1,4 +1,4 @@
-function smoothScrollTo(selector, duration, easing, callback) {
+function smoothScrollTo(selector, options) {
   "use strict";
   var elem = document.querySelector(selector),
     stopped = false,
@@ -7,9 +7,9 @@ function smoothScrollTo(selector, duration, easing, callback) {
     distance = Math.abs(y2 - y1),
     direction = y2 > y1 ? "down" : "up",
     t1 = performance.now(),
-    t2 = duration || 400,
+    t2 = options.duration || 400,
     easingFn =
-      easing ||
+      options.easing ||
       function(t) {
         return t;
       };
@@ -25,7 +25,8 @@ function smoothScrollTo(selector, duration, easing, callback) {
 
   var onScrollEnd = function() {
     window.removeEventListener("mousewheel", stopScroll);
-    if (callback && typeof callback === "function") callback();
+    if (options.callback && typeof options.callback === "function")
+      options.callback();
   };
 
   var isInsideDocument = function(y) {

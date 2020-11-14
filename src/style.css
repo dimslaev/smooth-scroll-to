@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+}
+
+body {
+  background: darkslategray;
+  color: #fff;
+  font-family: sans-serif;
+  height: 3000px;
+  padding: 40px;
+}
+
+#parent {
+  width: 400px;
+  height: 40px;
+  background: black;
+  overflow: auto;
+}
+
+#child {
+  width: 1200px;
+  height: 40px;
+  background: violet;
+}

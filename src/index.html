@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>Smooth Scroll To</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Muli:200,400"
+      rel="stylesheet"
+    />
+    <link href="style.css" rel="stylesheet" />
+    <script src="index.js"></script>
+    <script>
+      window.addEventListener("load", () => {
+        const smoothScroll = new SmoothScroll({
+          distance: 1200,
+          duration: 1000,
+          //   target: document.querySelector("#parent"),
+
+          // axis: "x",
+          callback: () => {
+            console.log("end");
+          },
+        });
+
+        document.querySelector("button").addEventListener("click", () => {
+          smoothScroll.init();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="parent">
+      <div id="child"></div>
+    </div>
+    <button>Scroll</button>
+  </body>
+</html>

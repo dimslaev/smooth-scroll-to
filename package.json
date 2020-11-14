@@ -4,7 +4,8 @@
   "description": "smooth scroll to section without jquery",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode=production ./src/index.js -o ./dist/smoothScrollTo.min.js"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,7 @@
     "scrolling"
   ],
   "dependencies": {
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "parcel-bundler": "^1.12.4"
   },
   "author": "dimslaev",
   "license": "ISC",

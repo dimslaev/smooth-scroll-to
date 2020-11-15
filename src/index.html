@@ -2,28 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Smooth Scroll To</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Muli:200,400"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,400" rel="stylesheet" />
     <link href="style.css" rel="stylesheet" />
     <script src="index.js"></script>
     <script>
       window.addEventListener("load", () => {
         document.querySelector("#box-x-asc").addEventListener("click", () => {
           const smoothScroll = new SmoothScrollTo({
-            to: 1200,
+            to: 400,
             target: document.querySelector("#parent-x"),
             axis: "x",
-            direction: "asc",
             callback: () => {
               console.log("end");
-            },
+            }
           });
           smoothScroll.init();
         });
@@ -32,10 +25,9 @@
             to: 0,
             target: document.querySelector("#parent-x"),
             axis: "x",
-            direction: "desc",
             callback: () => {
               console.log("end");
-            },
+            }
           });
           smoothScroll.init();
         });
@@ -44,10 +36,9 @@
             to: 1200,
             target: document.querySelector("#parent-y"),
             axis: "y",
-            direction: "asc",
             callback: () => {
               console.log("end");
-            },
+            }
           });
           smoothScroll.init();
         });
@@ -56,37 +47,30 @@
             to: 0,
             target: document.querySelector("#parent-y"),
             axis: "y",
-            direction: "desc",
             callback: () => {
               console.log("end");
-            },
+            }
           });
           smoothScroll.init();
         });
-        document
-          .querySelector("#window-y-asc")
-          .addEventListener("click", () => {
-            const smoothScroll = new SmoothScrollTo({
-              to: window.pageYOffset + 400,
-              direction: "asc",
-              callback: () => {
-                console.log("end");
-              },
-            });
-            smoothScroll.init();
+        document.querySelector("#window-y-asc").addEventListener("click", () => {
+          const smoothScroll = new SmoothScrollTo({
+            to: window.pageYOffset + 400,
+            callback: () => {
+              console.log("end");
+            }
           });
-        document
-          .querySelector("#window-y-desc")
-          .addEventListener("click", () => {
-            const smoothScroll = new SmoothScrollTo({
-              to: -1200,
-              direction: "desc",
-              callback: () => {
-                console.log("end");
-              },
-            });
-            smoothScroll.init();
+          smoothScroll.init();
+        });
+        document.querySelector("#window-y-desc").addEventListener("click", () => {
+          const smoothScroll = new SmoothScrollTo({
+            to: -1200,
+            callback: () => {
+              console.log("end");
+            }
           });
+          smoothScroll.init();
+        });
       });
     </script>
   </head>

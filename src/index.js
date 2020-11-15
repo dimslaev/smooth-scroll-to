@@ -18,11 +18,10 @@ const EASINGS = {
 
 class SmoothScrollTo {
   constructor(options) {
-    const { axis, callback, direction, documentMock, duration, easing, target, to } = options;
+    const { axis, callback, documentMock, duration, easing, target, to } = options;
 
     this.axis = axis || AXIS_Y;
     this.callback = callback || function () {};
-    this.direction = direction || DIRECTION_ASC;
     this.document = documentMock || document;
     this.duration = duration || DEFAULT_DURATION;
     this.easing = easing || EASE_OUT;
@@ -33,13 +32,17 @@ class SmoothScrollTo {
   init() {
     this.validateOptions();
 
-    this.boundScrollStop = this.onScrollStop.bind(this);
-    this.distance = this.getDistance();
-    this.easingFn = EASINGS[this.easing];
-    this.from = this.getFromCoordinate();
-    this.hasBeenInterrupted = false;
     this.startTime = performance.now();
+
+    this.from = this.getFromCoordinate();
     this.to = this.getToCoordinate();
+    this.direction = this.to > this.from ? DIRECTION_ASC : DIRECTION_DESC;
+    this.distance = this.getDistance();
+
+    this.easingFn = EASINGS[this.easing];
+
+    this.hasBeenInterrupted = false;
+    this.boundScrollStop = this.onScrollStop.bind(this);
 
     if (this.distance === 0) {
       console.warn(`${NAMESPACE}: no distance to be scrolled.`);
@@ -56,10 +59,6 @@ class SmoothScrollTo {
 
     if (typeof this.callback !== "function") {
       throw new Error(`${NAMESPACE}: 'callback' must be a function.`);
-    }
-
-    if (typeof this.direction !== "string" || (this.direction !== DIRECTION_ASC && this.direction !== DIRECTION_DESC)) {
-      throw new Error(`${NAMESPACE}: 'direction' must be either 'asc' or 'desc'.`);
     }
 
     if (typeof this.duration !== "number") {
@@ -88,14 +87,10 @@ class SmoothScrollTo {
   }
 
   getToCoordinate() {
-    if (this.direction === "asc") {
-      if (this.axis === AXIS_Y) {
-        return Math.min(this.to, this.target.scrollHeight - this.target.clientHeight);
-      } else {
-        return Math.min(this.to, this.target.scrollWidth - this.target.clientWidth);
-      }
+    if (this.axis === AXIS_Y) {
+      return Math.max(Math.min(this.to, this.target.scrollHeight - this.target.clientHeight), 0);
     } else {
-      return Math.max(this.to, 0);
+      return Math.max(Math.min(this.to, this.target.scrollWidth - this.target.clientWidth), 0);
     }
   }
 

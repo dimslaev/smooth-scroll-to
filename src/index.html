@@ -15,27 +15,101 @@
     <script src="index.js"></script>
     <script>
       window.addEventListener("load", () => {
-        const smoothScroll = new SmoothScroll({
-          distance: 1200,
-          duration: 1000,
-          //   target: document.querySelector("#parent"),
-
-          // axis: "x",
-          callback: () => {
-            console.log("end");
-          },
-        });
-
-        document.querySelector("button").addEventListener("click", () => {
+        document.querySelector("#box-x-asc").addEventListener("click", () => {
+          const smoothScroll = new SmoothScrollTo({
+            to: 1200,
+            target: document.querySelector("#parent-x"),
+            axis: "x",
+            direction: "asc",
+            callback: () => {
+              console.log("end");
+            },
+          });
           smoothScroll.init();
         });
+        document.querySelector("#box-x-desc").addEventListener("click", () => {
+          const smoothScroll = new SmoothScrollTo({
+            to: 0,
+            target: document.querySelector("#parent-x"),
+            axis: "x",
+            direction: "desc",
+            callback: () => {
+              console.log("end");
+            },
+          });
+          smoothScroll.init();
+        });
+        document.querySelector("#box-y-asc").addEventListener("click", () => {
+          const smoothScroll = new SmoothScrollTo({
+            to: 1200,
+            target: document.querySelector("#parent-y"),
+            axis: "y",
+            direction: "asc",
+            callback: () => {
+              console.log("end");
+            },
+          });
+          smoothScroll.init();
+        });
+        document.querySelector("#box-y-desc").addEventListener("click", () => {
+          const smoothScroll = new SmoothScrollTo({
+            to: 0,
+            target: document.querySelector("#parent-y"),
+            axis: "y",
+            direction: "desc",
+            callback: () => {
+              console.log("end");
+            },
+          });
+          smoothScroll.init();
+        });
+        document
+          .querySelector("#window-y-asc")
+          .addEventListener("click", () => {
+            const smoothScroll = new SmoothScrollTo({
+              to: window.pageYOffset + 400,
+              direction: "asc",
+              callback: () => {
+                console.log("end");
+              },
+            });
+            smoothScroll.init();
+          });
+        document
+          .querySelector("#window-y-desc")
+          .addEventListener("click", () => {
+            const smoothScroll = new SmoothScrollTo({
+              to: -1200,
+              direction: "desc",
+              callback: () => {
+                console.log("end");
+              },
+            });
+            smoothScroll.init();
+          });
       });
     </script>
   </head>
   <body>
-    <div id="parent">
-      <div id="child"></div>
+    <div class="box">
+      <div id="parent-x">
+        <div id="child-x"></div>
+      </div>
+      <button id="box-x-asc">Scroll Asc</button>
+      <button id="box-x-desc">Scroll Desc</button>
     </div>
-    <button>Scroll</button>
+
+    <div id="box">
+      <div id="parent-y">
+        <div id="child-y"></div>
+      </div>
+      <button id="box-y-asc">Scroll Asc</button>
+      <button id="box-y-desc">Scroll Desc</button>
+    </div>
+
+    <div class="fixed-buttons">
+      <button id="window-y-asc">Scroll Asc</button>
+      <button id="window-y-desc">Scroll Desc</button>
+    </div>
   </body>
 </html>

@@ -1,211 +1,150 @@
-class SmoothScroll {
+const NAMESPACE = "SmoothScrollTo";
+const DEFAULT_DURATION = 400;
+const DIRECTION_ASC = "asc";
+const DIRECTION_DESC = "desc";
+const AXIS_X = "x";
+const AXIS_Y = "y";
+const EASE_LINEAR = "linear";
+const EASE_OUT = "easeOut";
+const EASE_IN = "easeIn";
+const EASE_IN_OUT = "easeInOut";
+const EASES = [EASE_LINEAR, EASE_OUT, EASE_IN, EASE_IN_OUT];
+const EASINGS = {
+  [EASE_LINEAR]: (t) => t,
+  [EASE_OUT]: (t) => t * t,
+  [EASE_IN]: (t) => t * (2 - t),
+  [EASE_IN_OUT]: (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t)
+};
+
+class SmoothScrollTo {
   constructor(options) {
-    const {
-      axis,
-      callback,
-      direction,
-      distance,
-      duration,
-      easing,
-      target,
-    } = options;
+    const { axis, callback, direction, documentMock, duration, easing, target, to } = options;
 
-    this.EASINGS = {
-      linear: function (t) {
-        return t;
-      },
-      easeIn: function (t) {
-        return Math.pow(t, 5);
-      },
-      easeOut: function (t) {
-        return Math.pow(--t, 5) + 1;
-      },
-      easeInQuad: function (t) {
-        return t * t;
-      },
-      easeOutQuad: function (t) {
-        return t * (2 - t);
-      },
-      easeInOutQuad: function (t) {
-        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-      },
-    };
-
-    this.DEFAULT_DURATION = 400;
-    this.DEFAULT_DISTANCE = 0;
-    this.DIRECTION_ASC = "asc";
-    this.DIRECTION_DESC = "desc";
-    this.DEFAUTL_DIRECTION = this.DIRECTION_ASC;
-    this.AXIS_X = "x";
-    this.AXIS_Y = "y";
-
-    this.axis = typeof axis !== "undefined" ? axis : this.AXIS_Y;
-    this.callback = typeof callback !== "undefined" ? callback : function () {};
-    this.direction =
-      typeof direction !== "undefined" ? direction : this.DEFAUTL_DIRECTION;
-    this.distance =
-      typeof distance !== "undefined" ? distance : this.DEFAULT_DISTANCE;
-    this.duration =
-      typeof duration !== "undefined" ? duration : this.DEFAULT_DURATION;
-    this.easing = typeof easing !== "undefined" ? easing : this.EASINGS.easeOut;
-    this.target = typeof target !== "undefined" ? target : window;
+    this.axis = axis || AXIS_Y;
+    this.callback = callback || function () {};
+    this.direction = direction || DIRECTION_ASC;
+    this.document = documentMock || document;
+    this.duration = duration || DEFAULT_DURATION;
+    this.easing = easing || EASE_OUT;
+    this.target = target || this.document.documentElement;
+    this.to = to;
   }
 
   init() {
     this.validateOptions();
 
-    this.startTime = performance.now();
-    this.endTime = this.startTime + this.duration;
-
-    this.startCoordinate = this.getStartCoordinate();
-    this.endCoordinate = this.getEndCoordinate();
-
-    this.hasBeenInterrupted = false;
-
     this.boundScrollStop = this.onScrollStop.bind(this);
+    this.distance = this.getDistance();
+    this.easingFn = EASINGS[this.easing];
+    this.from = this.getFromCoordinate();
+    this.hasBeenInterrupted = false;
+    this.startTime = performance.now();
+    this.to = this.getToCoordinate();
+
+    if (this.distance === 0) {
+      console.warn(`${NAMESPACE}: no distance to be scrolled.`);
+      return;
+    }
 
     this.onScrollStart();
   }
 
   validateOptions() {
-    if (this.axis !== this.AXIS_X && this.axis !== this.AXIS_Y) {
-      throw new Error("SmoothScroll: axis must be either x or y.");
+    if (this.axis !== AXIS_X && this.axis !== AXIS_Y) {
+      throw new Error(`${NAMESPACE}: 'axis' must be either 'x' or 'y'.`);
     }
 
     if (typeof this.callback !== "function") {
-      throw new Error("SmoothScroll: callback must be a function.");
+      throw new Error(`${NAMESPACE}: 'callback' must be a function.`);
     }
 
-    if (
-      typeof this.direction !== "string" ||
-      (this.direction !== this.DIRECTION_ASC &&
-        this.direction !== this.DIRECTION_DESC)
-    ) {
-      throw new Error(
-        "SmoothScroll: direction must be a string - either `asc` or `desc`."
-      );
-    }
-
-    if (typeof this.distance !== "number") {
-      throw new Error("SmoothScroll: distance must be a number.");
+    if (typeof this.direction !== "string" || (this.direction !== DIRECTION_ASC && this.direction !== DIRECTION_DESC)) {
+      throw new Error(`${NAMESPACE}: 'direction' must be either 'asc' or 'desc'.`);
     }
 
     if (typeof this.duration !== "number") {
-      throw new Error("SmoothScroll: duration must be a number.");
+      throw new Error(`${NAMESPACE}: 'duration' must be a number.`);
     }
 
-    if (typeof this.target === "object" && this.target !== null) {
-    } else {
-      throw new Error("SmoothScroll: target must be an object (DOM element).");
+    if (!EASES.includes(this.easing)) {
+      throw new Error(`${NAMESPACE}: 'easing' must be one of: ${EASES.join(", ")}.`);
     }
 
-    if (this.distance === 0) {
-      console.warn("SmoothScroll: no distance to scroll.");
-    }
-  }
-
-  getStartCoordinate() {
-    let startCoordinate = 0;
-
-    if (this.target === window) {
-      if (this.axis === this.AXIS_Y) {
-        startCoordinate = pageYOffset;
-      } else {
-        startCoordinate = pageXOffset;
-      }
-    } else {
-      if (this.axis === this.AXIS_Y) {
-        startCoordinate = this.target.scrollTop;
-      } else {
-        startCoordinate = this.target.scrollLeft;
-      }
+    if (typeof this.to !== "number") {
+      throw new Error(`${NAMESPACE}: 'to' must be a number.`);
     }
 
-    return startCoordinate;
-  }
-
-  getEndCoordinate() {
-    if (this.direction === this.DIRECTION_ASC) {
-      return this.getEndCoordinateAscending();
-    } else {
-      return this.getEndCoordinateDescending();
+    if (typeof this.target !== "object" || this.target === null) {
+      throw new Error(`${NAMESPACE}: 'target' must be an object (DOM element).`);
     }
   }
 
-  getEndCoordinateAscending() {
-    const endCoordinate = this.startCoordinate + this.distance;
-
-    if (this.axis === this.AXIS_Y) {
-      let maxScrollTop = 0;
-
-      if (this.target === window) {
-        maxScrollTop = document.body.offsetHeight - window.innerHeight;
-      } else {
-        maxScrollTop = this.target.scrollHeight - this.target.clientHeight;
-      }
-
-      return Math.min(endCoordinate, maxScrollTop);
+  getFromCoordinate() {
+    if (this.axis === AXIS_Y) {
+      return this.target.scrollTop;
     } else {
-      let maxScrollLeft = 0;
-
-      if (this.target === window) {
-        maxScrollLeft = document.body.offsetWidth - window.innerWidth;
-      } else {
-        maxScrollLeft = this.target.scrollWidth - this.target.clientWidth;
-      }
-      return Math.min(endCoordinate, maxScrollLeft);
+      return this.target.scrollLeft;
     }
   }
 
-  getEndCoordinateDescending() {
-    const endCoordinate = this.startCoordinate - this.distance;
-    return Math.max(0, endCoordinate);
+  getToCoordinate() {
+    if (this.direction === "asc") {
+      if (this.axis === AXIS_Y) {
+        return Math.min(this.to, this.target.scrollHeight - this.target.clientHeight);
+      } else {
+        return Math.min(this.to, this.target.scrollWidth - this.target.clientWidth);
+      }
+    } else {
+      return Math.max(this.to, 0);
+    }
+  }
+
+  getDistance() {
+    if (this.direction === DIRECTION_ASC) {
+      return this.to - this.from;
+    } else {
+      return this.from - this.to;
+    }
   }
 
   getProgressCoordinate(displacement) {
-    if (this.direction === this.DIRECTION_ASC) {
-      return this.startCoordinate + displacement;
+    if (this.direction === DIRECTION_ASC) {
+      return this.from + displacement;
     } else {
-      return this.startCoordinate - displacement;
+      return this.from - displacement;
     }
   }
 
-  checkProgressCoordinate(coordinate) {
-    if (this.direction === this.DIRECTION_ASC) {
-      return coordinate < this.endCoordinate;
-    } else {
-      return coordinate > this.endCoordinate;
-    }
+  addEventListeners() {
+    this.target.addEventListener("mousewheel", this.boundScrollStop);
+    this.target.addEventListener("touchmove", this.boundScrollStop);
   }
 
-  onScrollStop() {
-    this.hasBeenInterrupted = true;
+  removeEventListeners() {
     this.target.removeEventListener("mousewheel", this.boundScrollStop);
+    this.target.removeEventListener("touchmove", this.boundScrollStop);
   }
 
   onScrollStart() {
     requestAnimationFrame(this.tick.bind(this));
-    this.target.addEventListener("mousewheel", this.boundScrollStop);
+    this.addEventListeners();
+  }
+
+  onScrollStop() {
+    this.hasBeenInterrupted = true;
+    this.removeEventListeners();
   }
 
   onScrollEnd() {
     this.callback();
-    this.target.removeEventListener("mousewheel", this.boundScrollStop);
+    this.removeEventListeners();
   }
 
   scroll(coordinate) {
-    if (this.target === window) {
-      if (this.axis === this.AXIS_Y) {
-        window.scrollTo(0, coordinate);
-      } else {
-        window.scrollTo(coordinate, 0);
-      }
+    if (this.axis === AXIS_Y) {
+      this.target.scrollTop = coordinate;
     } else {
-      if (this.axis === this.AXIS_Y) {
-        this.target.scrollTop = coordinate;
-      } else {
-        this.target.scrollLeft = coordinate;
-      }
+      this.target.scrollLeft = coordinate;
     }
   }
 
@@ -213,18 +152,20 @@ class SmoothScroll {
     if (this.hasBeenInterrupted) return;
 
     const elapsed = performance.now() - this.startTime;
-    const progress = Math.min(elapsed / this.endTime, 1);
-    const displacement = this.easing(progress) * this.distance;
+    const progress = Math.min(elapsed / this.duration, 1);
+    const displacement = this.easingFn(progress) * this.distance;
     const progressCoordinate = this.getProgressCoordinate(displacement);
 
-    if (this.checkProgressCoordinate(progressCoordinate)) {
+    if (progress < 1) {
       this.scroll(progressCoordinate);
       requestAnimationFrame(this.tick.bind(this));
     } else {
-      this.scroll(this.endCoordinate);
+      this.scroll(this.to);
       requestAnimationFrame(this.onScrollEnd.bind(this));
     }
   }
 }
 
-window.SmoothScroll = SmoothScroll;
+window.SmoothScrollTo = SmoothScrollTo;
+
+module.exports = SmoothScrollTo;

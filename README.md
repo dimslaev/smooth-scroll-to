@@ -1,40 +1,37 @@
 ### Description
 
-Custom smooth scrolling in pure JS (no jQuery).
+Pure js smooth scroll functionality using a class syntax.
 
-### Usage
+### Install
 
-**1. Choose duration and easing using the [visualizer](https://dimslaev.github.io/smooth-scroll-to/demo)**
-
-**2. Include smoothScrollTo.min.js**
-
-```html
-<script src="smoothScrollTo.min.js"></script>
+```
+npm i --save smooth-scroll-to
 ```
 
-**3. Code Example**
+### API
 
-```html
-<a href="#target-section" onclick="scrollToSection('#target-section')"
-  >Scroll to target section</a
->
+| OPTION   | TYPE     | DEFAULT VALUE | DESCRIPTION                                                                                          |
+| -------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------- |
+| axis     | String   | "y"           | Can scroll along the "x" or the "y" axis.                                                            |
+| callback | Function | NOOP          | Called when scrolling has finished.                                                                  |
+| duration | Number   | 400           | Duration of the scroll in miliseconds.                                                               |
+| easing   | String   | "easeOut"     | Easing type - `linear` ,`easeOut`, `easeIn`, `easeInOut`.                                            |
+| target   | Object   | window        | Can be window or any DOM element with `overflow: auto`.                                              |
+| to       | Number   | 0             | X or Y coordinate to scroll to (relative to the target element, not to the current scroll position). |
 
-<section id="target-section">
-  Target Section
-</section>
+### Code Examples
 
-<script>
-  var options = {
-    duration: 600,
-    easing: "easeInOutQuad",
-    callback: function() {
-      console.log("scroll end");
-    },
-  };
+```javascript
+window.addEventListener("load", () => {
+  document.querySelector("#button").addEventListener("click", () => {
+    const smoothScroll = new SmoothScrollTo({
+      to: 1200,
+      callback: () => {
+        console.log("end");
+      }
+    });
 
-  var scrollToSection = function(selector) {
-    smoothScrollTo(selector, options);
-    return false;
-  };
-</script>
+    smoothScroll.init();
+  });
+});
 ```

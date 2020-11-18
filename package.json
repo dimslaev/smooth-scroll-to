@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel src/index.html --out-dir example",
-    "build": "parcel build --no-content-hash --no-source-maps --no-cache src/index.js --out-file dist/smooth-scroll-to.min.js"
+    "build": "parcel build --no-content-hash --no-source-maps --no-cache src/index.js --out-file dist/smooth-scroll-to.min.js",
+    "test": "./node_modules/jest/bin/jest.js"
   },
   "repository": {
     "type": "git",

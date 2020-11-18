@@ -18,14 +18,13 @@ const EASINGS = {
 
 class SmoothScrollTo {
   constructor(options) {
-    const { axis, callback, documentMock, duration, easing, target, to } = options;
+    const { axis, callback, duration, easing, target, to } = options;
 
     this.axis = axis || AXIS_Y;
     this.callback = callback || function () {};
-    this.document = documentMock || document;
     this.duration = duration || DEFAULT_DURATION;
     this.easing = easing || EASE_OUT;
-    this.target = target || this.document.documentElement;
+    this.target = target || document.documentElement;
     this.to = to;
   }
 

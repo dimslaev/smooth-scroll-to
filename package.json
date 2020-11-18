@@ -1,30 +1,25 @@
 {
-  "name": "smooth-scroll-to",
+  "name": "@dimslaev/smooth-scroll-to",
   "version": "1.0.0",
-  "description": "smooth scroll to section without jquery",
+  "description": "Pure js smooth scrolling for modern browsers.",
   "main": "index.js",
   "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "start": "parcel src/index.html --out-dir example",
+    "build": "parcel build --no-content-hash --no-source-maps --no-cache src/index.js --out-file dist/smooth-scroll-to.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dimslaev/smooth-scroll-visualizer.git"
+    "url": "git+https://github.com/dimslaev/smooth-scroll-to"
   },
   "keywords": [
-    "smooth",
-    "scroll",
+    "smooth scroll",
     "vanilla",
-    "smooth",
-    "scrolling"
+    "pure js"
   ],
-  "dependencies": {
-    "parcel-bundler": "^1.12.4"
-  },
-  "author": "dimslaev",
+  "author": "Dimitar Slaev",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dimslaev/smooth-scroll-visualizer/issues"
+    "url": "https://github.com/dimslaev/smooth-scroll-to/issues"
   },
-  "homepage": "https://github.com/dimslaev/smooth-scroll-visualizer#readme"
+  "homepage": "https://github.com/dimslaev/smooth-scroll-to/#readme"
 }

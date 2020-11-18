@@ -2,12 +2,6 @@
 
 Pure js smooth scroll functionality using a class syntax.
 
-### Install
-
-```
-npm i --save smooth-scroll-to
-```
-
 ### API
 
 | OPTION   | TYPE     | DEFAULT VALUE | DESCRIPTION                                                                                          |

@@ -1,0 +1,1 @@
+*{margin:0}body{background:#2f4f4f;color:#fff;font-family:sans-serif;height:3000px;padding:40px}#parent-x{width:400px;height:40px;background:#000;overflow:auto}#child-x{width:1200px;height:40px;background:violet}#parent-y{width:200px;height:400px;background:#000;overflow:auto}#child-y{width:200px;height:1200px;background:violet}.fixed-buttons{position:fixed;top:0;right:0}

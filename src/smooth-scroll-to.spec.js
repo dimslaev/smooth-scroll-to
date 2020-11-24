@@ -1,4 +1,4 @@
-const SmoothScrollTo = require("./index.js");
+const SmoothScrollTo = require("./smooth-scroll-to.js");
 
 const NOOP = () => {};
 

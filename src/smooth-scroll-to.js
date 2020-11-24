@@ -160,6 +160,4 @@ class SmoothScrollTo {
   }
 }
 
-window.SmoothScrollTo = SmoothScrollTo;
-
 module.exports = SmoothScrollTo;
